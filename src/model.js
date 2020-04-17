@@ -32,15 +32,5 @@ User.init({
   sequelize,
   modelName: 'user',
   timestamps: false,
-    hooks: {
-            beforeCreate: async user => {
-                    const saltRounds = 10
-                    const salt = await bcrypt.genSalt(saltRounds)
-                    user.password = await bcrypt.has(user.password, salt)
-            }
-    }
 })
 
-User.prototype.isPasswordValid = async function(password) {
-  return await bcrypt.compare(password, this.password)
-}

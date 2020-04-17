@@ -12,7 +12,7 @@ export const post = async (req, res) => {
 		const user = await User.create({ email, password })
 		res.end(JSON.stringify({ status: 'success', message: 'User added' }))
 	} catch (error) {
-		res.statusCode = 500;
+	//	res.statusCode = 500;
 		let message = 'An error occurred';
     if (error.name === 'SequelizeUniqueConstraintError') {
       message = 'User already exists'
