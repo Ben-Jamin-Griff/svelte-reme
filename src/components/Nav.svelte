@@ -1,6 +1,10 @@
 <script>
 	export let segment;
+    import { stores } from '@sapper/app'
     import { showModal, showLoginModal, showRegistrationModal } from '../store.js'
+    import axios from 'axios'
+
+    const { session } = stores()
 </script>
 
 <style>
@@ -58,6 +62,14 @@
         <a class='{segment === undefined ? "page" : undefined}' href='.'><img src="raphael.svg" alt="" /></a>
         <nav>
             <ul>
+                    {#if $session.user}
+                <li><a class='link {segment === "about" ? "page" : undefined}' href='about'>Give feedback</a></li>
+                <li><a class='link' href='javascript:;' on:click={async () => {
+                        await axios.post('auth/logout')
+                        session.set({ user: null })
+                    }}>Log out</a></li>
+                <li style="padding: 1em 0.5em;">{$session.user}</li>
+                    {:else}
                 <li><a class='link {segment === "about" ? "page" : undefined}' href='about'>Give feedback</a></li>
                 <li><a class='link {segment === "login" ? "page" : undefined}' href='javascript:;' on:click={() => {
                        showModal.set(true)
@@ -69,6 +81,7 @@
                        showLoginModal.set(false)
                        showRegistrationModal.set(true)
                        }}>Researchers sign up</a></li>
+                    {/if}
         	</ul>
         </nav>
 </div>

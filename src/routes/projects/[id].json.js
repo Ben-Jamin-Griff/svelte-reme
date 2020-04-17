@@ -1,26 +1,24 @@
-import projects from './_projects.js'
-
-const lookup = new Map()
-projects.forEach(project => {
-        lookup.set(project.id, JSON.stringify(project))
-})
+import Project from '../../models/project.js'
 
 export function get(req, res, next) {
         const { id } = req.params
 
-        if (lookup.has(id)) {
+        Project.findByPk(id).then(project => {
+
+        if (project) {
                 res.writeHead(200, {
                         'Content-Type': 'application/json'
                 })
 
-                res.end(lookup.get(id))
+                res.end(JSON.stringify(project.dataValues))
         } else {
-                res,writeHead(404, {
+                res.writeHead(404, {
                         'Content-Type': 'application/json'
                 })
 
                 res.end(JSON.stringify({
-                        'Content-Type': 'application/json'
+                        message: 'Not found' 
                 }))
         }
+        })
 }

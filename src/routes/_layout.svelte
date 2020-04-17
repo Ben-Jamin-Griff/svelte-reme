@@ -31,12 +31,18 @@
                         <LoginModal on:showSignup={() => {
                                     showLoginModal.set(false) 
                                     showRegistrationModal.set(true)
+                                  }} on:closeModal={() => {
+                                    showLoginModal.set(false)
+                                    showModal.set(false)
                         }}></LoginModal>
                 {/if}
                 {#if $showRegistrationModal}
                         <RegistrationModal on:showLogin={() => {
-                                           showLoginModal.set(true)
-                                           showRegistrationModal.set(false)
+                                    showLoginModal.set(true)
+                                    showRegistrationModal.set(false)
+                                  }} on:closeModal={() => {
+                                    showRegistrationModal.set(false)
+                                    showModal.set(false)
                         }}></RegistrationModal>
                 {/if}
         </Modal>

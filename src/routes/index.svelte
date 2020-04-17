@@ -1,8 +1,33 @@
+<script context="module">
+	export async function preload({ params, query }) {
+		const res = await this.fetch(`projects/list.json`)
+		const data = await res.json()
+
+		if (res.status === 200) {
+			return { projects: data }
+		} else {
+			this.error(res.status, data.message);
+		}
+	}
+</script>
+
 <script>
-        import ProjectsList from './projects/_ProjectsListHome.svelte'
+        import Project from './projects/_ProjectHome.svelte'
+        export let projects
 </script>
 
 <style>
+
+        .projects-page {
+                display: inline-grid;
+                grid-template-columns: 300px 300px 300px;
+                grid-template-rows: 300px;
+        }
+
+        .projects {
+                margin: 20px;
+                padding: 10px;
+        }
 
         .container {
                 margin: 0;
@@ -59,7 +84,13 @@
     </div>
     <div class="bottom">
             <h1>Sign up to these projects now</h1>
-            <ProjectsList />
+            <div class="projects-page">
+                    {#each projects as project}
+                            <div class="projects">
+                                    <Project {...project} />
+                            </div>
+                    {/each} 
+            </div>
     </div>
     </div>
 </main>

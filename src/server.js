@@ -7,14 +7,17 @@ import session from 'express-session';
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
-import { User, sequelize } from './model.js'
+import { sequelize } from './database.js'
+import User from './models/user.js'
+import Project from './models/project.js'
 
 const sessionStore = new SequelizeStore({
 	db: sequelize
 })
 
-
 //sessionStore.sync() already synced
+Project.sync({ alter: true })
+User.sync({ alter: true })
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
