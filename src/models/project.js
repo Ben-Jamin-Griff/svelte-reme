@@ -25,6 +25,10 @@ Project.init({
         description: {
                 type: DataTypes.STRING,
                 allowNull: false
+        },
+        creator: {
+                type: DataTypes.STRING,
+                allowNull: false
         }}, {
                 sequelize,
                 modelName: 'projects',
