@@ -1,6 +1,6 @@
 <script context="module">
         export async function preload({ params, query }){
-                const res = await this.fetch('projects/dashboard_list.json')
+                const res = await this.fetch('../projects/dashboard_list.json')
                 const data = await res.json()
 
                 if (res.status === 200) {
@@ -34,6 +34,11 @@
   img {
     width: 180px;
   }
+
+  button {
+          margin-top: 20px;
+  }
+
 </style>
 
 <svelte:head>
@@ -54,11 +59,13 @@
                                                 <img src="{project.picture}" alt="Project picture" />
                                                 <div>
                                                         <h2>{project.university} - {project.title}</h2>
-                                                        <p><a href="/projects/{project.id}">Go to project</a></p>
+                                                        <p><a href="/projects/{project.id}">View project</a></p>
+                                                        <p><a href="/user/{project.id}">Edit project</a></p>
                                                 </div>
                                         </div>
                                 {/each}
                         </div>
                 {/if}
+                <button><a href="/user/new">Create a new project</a></button>
         </div>
 </main>

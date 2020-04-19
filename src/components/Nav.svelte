@@ -64,13 +64,12 @@
             <ul>
                     {#if $session.user}
                 <li><a class='link {segment === "about" ? "page" : undefined}' href='about'>Give feedback</a></li>
+                <li><a class='link {segment === "dashboard" ? "page" : undefined}' href='./user/dashboard'>Dashboard</a></li>
                 <li><a class='link' href='javascript:;' on:click={async () => {
                         await axios.post('auth/logout')
                         session.set({ user: null })
                        }}>Log out</a></li>
-                <li><a class='link {segment === "dashboard" ? "page" : undefined}' href='dashboard'>Dashboard</a></li>
-                <li style="padding: 1em 0.5em;">{$session.user}</li>
-                    {:else}
+                                    {:else}
                 <li><a class='link {segment === "about" ? "page" : undefined}' href='about'>Give feedback</a></li>
                 <li><a class='link {segment === "login" ? "page" : undefined}' href='javascript:;' on:click={() => {
                        showModal.set(true)

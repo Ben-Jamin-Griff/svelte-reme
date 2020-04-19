@@ -2,6 +2,7 @@ import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
 import bodyParser from 'body-parser';
+import fileupload from 'express-fileupload';
 import * as sapper from '@sapper/server';
 import session from 'express-session';
 import passport from 'passport'
@@ -60,6 +61,7 @@ passport.deserializeUser((email, done) => {
 
 polka() // You can also use Express
 	.use(
+        fileupload(),
         session({
                 secret: '34g234gh3g43h2jg423jh',
                 resave: false,
