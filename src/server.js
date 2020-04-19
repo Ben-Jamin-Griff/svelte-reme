@@ -16,12 +16,18 @@ const sessionStore = new SequelizeStore({
 	db: sequelize
 })
 
-//sessionStore.sync() already synced
+// Synchronising databases
+
+//---sessionStore.sync() already synced
 Project.sync({ alter: true })
 User.sync({ alter: true })
 
+// Server code
+
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
+
+// Passport.js code
 
 passport.use(new LocalStrategy({
 	usernameField: 'email',
@@ -59,6 +65,8 @@ passport.deserializeUser((email, done) => {
 	})
 })
 
+// Polka code for the server
+
 polka() // You can also use Express
 	.use(
         fileupload(),
@@ -86,6 +94,9 @@ polka() // You can also use Express
 		})
 	)
 
+// Server code
+
 	.listen(PORT, err => {
 		if (err) console.log('error', err);
     });
+

@@ -17,7 +17,7 @@ export const post = async (req, res, next) => {
     return
   }
 
-        projectData.description = sanitizeHtml(projectData.description, {
+  projectData.description = sanitizeHtml(projectData.description, {
     allowedTags: [ 'b', 'i', 'em', 'strong', 'p', 'br' ]
   })
 

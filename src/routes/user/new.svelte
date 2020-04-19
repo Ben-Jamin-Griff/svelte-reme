@@ -28,5 +28,5 @@
 
 <h2>Add a new project</h2>
 <div>
-        <Form buttonText={'Addd project'} on:submit={submit}></Form>
+        <Form buttonText={'Add project'} on:submit={submit}></Form>
 </div>
