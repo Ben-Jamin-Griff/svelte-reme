@@ -6,32 +6,41 @@
         export let project = {}
         export let buttonText
 
-        const submit = () => {
-                dispatch('submit', {
-                        'project': project
-                })
-        }
-
         onMount(() => {
   const editor = pell.init({
     element: document.getElementById('editor'),
     onChange: html => project.description = html,
     defaultParagraphSeparator: 'p',
-    styleWithCSS: true,
+    styleWithCSS: false,
     actions: [
-      'bold',
-      'underline',
+      {
+      name: 'bold',
+      icon: '<div style="background-color:black;">b</div>',
+      },
+      {
+      name: 'underline',
+      icon: '<div style="background-color:black;">u</div>',
+      },
       {
         name: 'italic',
+        icon: '<div style="background-color:black;">i</div>',
         result: () => pell.exec('italic')
       },
     ]
   })
   editor.content.innerHTML = project.description || ''
+
   document.querySelector('#fileUpload').addEventListener('change', event => {
   handleImageUpload(event)
 })
 })
+
+  const submit = () => {
+                dispatch('submit', {
+                        'project': project
+                })
+  }
+
 
   const handleImageUpload = event => {
   const files = event.target.files

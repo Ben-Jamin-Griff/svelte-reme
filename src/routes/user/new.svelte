@@ -5,12 +5,11 @@
 
 	let project = {}
 
-	const submit = async () => {
+	const submit = async event => {
             const projectDetails = event.detail.project
     try {
       const response = await axios.post('user/new', { 'project': projectDetails })
       if (response.data.status === 'error') {
-      console.log(response.data.message)
       goto('/user/dashboard')
         return
       }
@@ -19,7 +18,6 @@
 
     } catch (error) {
       alert(error.response.data.message)
-      console.log(error.response.data.message)
       goto('/user/dashboard')
       return
     }

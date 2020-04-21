@@ -12,7 +12,52 @@
 </script>
 
 <script>
+        import axios from 'axios'
+        import { goto, stores } from '@sapper/app'
         export let projects
+        const { session } = stores()
+
+        const removeProject = async (project) => {
+                let projectData=project
+                try {
+                        const response = await axios.post('user/destroy', projectData )
+                                                
+                        if (response.data.status === 'error') {
+                                console.log(projectData)
+                                goto('/user/dashboard')
+                                return
+                        }
+                        goto('/')
+                        
+                } catch (error) {
+                        console.log(projectData)
+                        alert(error.response.data.message)
+                        goto('/user/dashboard')
+                        return
+                }
+        }
+
+        const removeUser = async (user) => {
+                try {
+                        const response = await axios.post('user/leave', user )
+                        if (response.data.status === 'error') {
+                                goto('/')
+                                return
+                        }
+                        goto('/')
+                        await axios.post('auth/logout')
+                        session.set({ user: null })
+
+                } catch (error) {
+                        alert(error.response.data.message)
+                        goto('/')
+                        return
+                }
+                
+                       
+        }
+
+
 </script>
 
 <style>
@@ -61,11 +106,14 @@
                                                         <h2>{project.university} - {project.title}</h2>
                                                         <p><a href="/projects/{project.id}">View project</a></p>
                                                         <p><a href="/user/{project.id}">Edit project</a></p>
+                                                        <button on:click={removeProject(project)}>Delete project</button>
                                                 </div>
                                         </div>
                                 {/each}
                         </div>
                 {/if}
                 <button><a href="/user/new">Create a new project</a></button>
+                <button on:click={removeUser($session.user)}>Delete account</button>
+
         </div>
 </main>

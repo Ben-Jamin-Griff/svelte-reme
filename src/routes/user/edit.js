@@ -17,10 +17,6 @@ export const post = async (req, res, next) => {
     return
   }
 
-  projectData.description = sanitizeHtml(projectData.description, {
-    allowedTags: [ 'b', 'i', 'em', 'strong', 'p', 'br' ]
-  })
-
 
   const userEmail = req.session.passport.user
   User.findOne({ where: { email: userEmail }}).then(user => {
@@ -39,6 +35,10 @@ export const post = async (req, res, next) => {
 
           return
         }
+
+    projectData.description = sanitizeHtml(projectData.description, {
+        allowedTags: [ 'b', 'u', 'i', 'em', 'strong', 'p', 'br' ]
+    })
 
         Project.update(projectData, {
           where: {

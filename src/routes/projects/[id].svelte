@@ -51,7 +51,7 @@
                     showModal.set(true)
                     showLoginModal.set(true)
                     }}>Take part now</button>
-            <p>{project.description}</p>
+            <p>{@html project.description}</p>
         </main>
 
         <aside>

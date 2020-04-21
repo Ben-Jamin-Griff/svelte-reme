@@ -17,7 +17,7 @@ export const post = async (req, res, next) => {
         }
 
 projectData.description = sanitizeHtml(projectData.description, {
-    allowedTags: [ 'b', 'i', 'em', 'strong', 'p', 'br' ]
+    allowedTags: [ 'b', 'u', 'i', 'em', 'strong', 'p', 'br' ]
   })
 
         const userEmail = req.session.passport.user

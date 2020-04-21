@@ -1,7 +1,7 @@
 <script context="module">
         export async function preload({ params, query }) {
-return { id: params.id }
-}
+            return { id: params.id }
+        }
 </script>
 
 <script>
@@ -29,29 +29,29 @@ return { id: params.id }
 
         const submit = async event => {
                 const projectDetails = event.detail.project
-
                 try {
                         const response = await axios.post('user/edit', { 'project': projectDetails })
                         if (response.data.status === 'error') {
-                            if (response.data.message === 'SequelizeValidationError') {
-        alert('Validation error')
-      } else {
-        alert(response.data.message)
-      }
-      return
-    }
+                        if (response.data.message === 'SequelizeValidationError') {
+                        alert('Validation error')
+                    } else {
+                        alert(response.data.message)
+                    }
+                        return
+                    }
 
-    alert('Project data saved successfully')
-    goto('/user/dashboard')
-  } catch (error) {
-    if (error.response && error.response.data.message === 'SequelizeValidationError') {
-      alert('Validation error')
-    } else {
-      alert(error.response.data.message)
-    }
-    return
-  }
-}
+                        alert('Project data saved successfully')
+                        goto('/user/dashboard')
+                    } catch (error) {
+                        if (error.response && error.response.data.message === 'SequelizeValidationError') {
+                        alert('Validation error')
+                    } else {
+                        alert(error.response.data.message)
+                    }
+                        return
+                    }
+        }
+
 </script>
 
 <div>

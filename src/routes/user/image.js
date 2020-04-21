@@ -16,24 +16,21 @@ export const post = async (req, res, next) => {
   }
 
   const image = req.files.image
-//  const fileName = randomstring.generate(7) + image.name
-//  const path = __dirname + '../../../static/img/' + fileName
+  const fileName = randomstring.generate(7) + image.name
+  const path = __dirname + '/../../../static/img/' + fileName
 
-//  console.log(__dirname)
+  image.mv(path, (error) => {
+  if (error) {
+    res.writeHead(500, {
+      'Content-Type': 'application/json'
+    })
+    res.end(JSON.stringify({ status: 'error', message: error }))
+    return
+  }
 
-//  image.mv(path, (error) => {
-//  if (error) {
-//    res.writeHead(500, {
-//      'Content-Type': 'application/json'
-//    })
-//    res.end(JSON.stringify({ status: 'error', message: error }))
-//    return
-//  }
-
-//  res.writeHead(200, {
-//    'Content-Type': 'application/json'
-//  })
-  res.end(JSON.stringify({ status: 'success', path: '/img/' + image.name }))
-// })
-
+  res.writeHead(200, {
+    'Content-Type': 'application/json'
+  })
+  res.end(JSON.stringify({ status: 'success', path: '/img/' + fileName }))
+ })
 }
