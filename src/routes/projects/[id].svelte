@@ -13,7 +13,7 @@
 
 <script>
         export let project
-        import { showModal, showLoginModal } from '../../store.js'
+        import { showModal, showCommunicationModal } from '../../store.js'
 </script>
 
 <style>
@@ -49,7 +49,7 @@
             <h1>{project.university} - {project.title}</h1>
             <button class="action styled" on:click={() => {
                     showModal.set(true)
-                    showLoginModal.set(true)
+                    showCommunicationModal.set(true)
                     }}>Take part now</button>
             <p>{@html project.description}</p>
         </main>

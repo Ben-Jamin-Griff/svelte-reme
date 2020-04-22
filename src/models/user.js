@@ -6,6 +6,14 @@ import { sequelize } from '../database.js'
 class User extends Model {}
 
 User.init({
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: true 
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: true 
+  },
   email: {
     type: DataTypes.STRING,
     allowNull: false
@@ -13,8 +21,24 @@ User.init({
   password: {
     type: DataTypes.STRING,
     allowNull: false
-  }
-}, {
+  },
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  },
+},
+//        {
+//  classMethods: {
+//    associate: function(models) {
+//            User.hasOne(models.VerificationToken, {
+//                    as: 'verificationToken',
+//                    foreignKey: 'userID',
+//                    foreignKeyConstraint: true,
+//            });
+//    }}
+//},
+        {
   sequelize,
   modelName: 'user',
   timestamps: false,
@@ -26,6 +50,7 @@ User.init({
     }
   }
 })
+
 
 User.prototype.isPasswordValid = async function(password) {
   return await bcrypt.compare(password, this.password)

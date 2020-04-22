@@ -12,6 +12,9 @@ import { sequelize } from './database.js'
 import User from './models/user.js'
 import Project from './models/project.js'
 
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const sessionStore = new SequelizeStore({
 	db: sequelize
 })
@@ -21,6 +24,15 @@ const sessionStore = new SequelizeStore({
 //---sessionStore.sync() already synced
 Project.sync({ alter: true })
 User.sync({ alter: true })
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // Server code
 
