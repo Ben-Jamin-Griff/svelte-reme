@@ -16,15 +16,18 @@
                     subject: 'ReMe: Enquiry from ' + name,
                     text: description, 
                 };
-                console.log(msg)
-                const response = await axios.get('projects/email', msg )
-
-                if (response.data.status === 'error') { 
-                    alert(response.data.message) 
-                    return 
-                } 
-                dispatch('closeModal') 
-                } 
+                console.log(msg);
+                try {
+                        const breeds = await axios.get('https://dog.ceo/api/breeds/list/all') 
+                        console.log(breeds.data.message)
+                        const fix = await axios.get('projects/emailed')
+                        console.log(fix)
+                        dispatch('closeModal')
+                } catch (error) {
+                        console.log(error)
+                        dispatch('closeModal')
+                }
+        } 
 
 </script>
 

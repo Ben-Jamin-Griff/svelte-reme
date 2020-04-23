@@ -12,6 +12,7 @@ import { sequelize } from './database.js'
 import User from './models/user.js'
 import Project from './models/project.js'
 
+
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -79,7 +80,7 @@ passport.deserializeUser((email, done) => {
 
 // Polka code for the server
 
-polka() // You can also use Express
+const server = polka() // You can also use Express
 	.use(
         fileupload(),
         session({
@@ -107,8 +108,11 @@ polka() // You can also use Express
 	)
 
 // Server code
+    server.get('/api', (req, res) => {
+        res.end('Finally');
+    });
 
-	.listen(PORT, err => {
+	server.listen(PORT, err => {
 		if (err) console.log('error', err);
     });
 
