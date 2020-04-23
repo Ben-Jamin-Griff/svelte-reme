@@ -78,10 +78,16 @@ passport.deserializeUser((email, done) => {
 	})
 })
 
+// Email request
+//function mail(req, res, next) {
+//        req.msg = 'Hello';
+//}
+
 // Polka code for the server
 
 const server = polka() // You can also use Express
-	.use(
+	server.use(
+//        mail,
         fileupload(),
         session({
                 secret: '34g234gh3g43h2jg423jh',
@@ -109,7 +115,7 @@ const server = polka() // You can also use Express
 
 // Server code
     server.get('/api', (req, res) => {
-        res.end('Finally');
+            res.end('~> Finally');
     });
 
 	server.listen(PORT, err => {
