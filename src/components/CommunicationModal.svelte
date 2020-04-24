@@ -2,32 +2,42 @@
         import { createEventDispatcher } from 'svelte';
         import axios from 'axios'
         import { stores } from '@sapper/app'
-        const { session } = stores()
+        import { onMount } from 'svelte'
+        import { projectCode } from '../store.js'
+        const { session, page } = stores()
         const dispatch = createEventDispatcher();
+
+
+        projectCode.subscribe
+
+        const code = ($projectCode);
 
         let name=''
         let email=''
         let description=''
 
-        const submit = async () => { 
+        const submit = async (req, res, next) => { 
                 let msg = {
-                    to: 'drjamin1990@gmail.com',
+                    to: '',
                     from: 'drjamin1990@gmail.com',
                     subject: 'ReMe: Enquiry from ' + name,
-                    text: description, 
+                    text: description + ' from: ' + email, 
                 };
-                console.log(msg);
+                let data = {
+                        msg,
+                        code
+                };
                 try {
-                        const breeds = await axios.get('https://dog.ceo/api/breeds/list/all') 
-                        console.log(breeds.data.message)
-                        const fix = await axios.get('projects/emailed')
-                        console.log(fix)
+                        const sendEmail = await axios.post('user/emailed', data)
                         dispatch('closeModal')
                 } catch (error) {
                         console.log(error)
-                        dispatch('closeModal')
                 }
         } 
+
+        const go = async (req, res, next) => {
+                        console.log(req)
+        }
 
 </script>
 

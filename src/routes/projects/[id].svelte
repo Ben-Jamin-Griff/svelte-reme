@@ -13,7 +13,9 @@
 
 <script>
         export let project
-        import { showModal, showCommunicationModal } from '../../store.js'
+        import { showModal, showCommunicationModal, projectCode } from '../../store.js'
+        projectCode.subscribe;
+        projectCode.set(project.id);
 </script>
 
 <style>
