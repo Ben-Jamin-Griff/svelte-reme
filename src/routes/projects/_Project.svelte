@@ -33,7 +33,7 @@
 <div class="project">
           <div class="left">
             <h2>{university} - {title}</h2>
-            <p>{description}</p>
+            <p>{@html description}</p>
           </div>
           <div class="right">
             <img src="{picture}" style="" alt="" />

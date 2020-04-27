@@ -2,6 +2,7 @@ import sirv from 'sirv';
 import polka from 'polka';
 import compression from 'compression';
 import bodyParser from 'body-parser';
+import fileupload from 'express-fileupload';
 import * as sapper from '@sapper/server';
 import session from 'express-session';
 import passport from 'passport'
@@ -11,16 +12,35 @@ import { sequelize } from './database.js'
 import User from './models/user.js'
 import Project from './models/project.js'
 
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 const sessionStore = new SequelizeStore({
 	db: sequelize
 })
 
-//sessionStore.sync() already synced
+// Synchronising databases
+
+//---sessionStore.sync() already synced
 Project.sync({ alter: true })
 User.sync({ alter: true })
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+// Server code
+
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
+
+// Passport.js code
 
 passport.use(new LocalStrategy({
 	usernameField: 'email',
@@ -58,8 +78,12 @@ passport.deserializeUser((email, done) => {
 	})
 })
 
-polka() // You can also use Express
-	.use(
+// Polka code for the server
+
+const server = polka() // You can also use Express
+	server.use(
+//        mail,
+        fileupload(),
         session({
                 secret: '34g234gh3g43h2jg423jh',
                 resave: false,
@@ -84,6 +108,9 @@ polka() // You can also use Express
 		})
 	)
 
-	.listen(PORT, err => {
+// Server code
+
+	server.listen(PORT, err => {
 		if (err) console.log('error', err);
     });
+

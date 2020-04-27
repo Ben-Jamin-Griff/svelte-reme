@@ -13,7 +13,9 @@
 
 <script>
         export let project
-        import { showModal, showLoginModal } from '../../store.js'
+        import { showModal, showCommunicationModal, projectCode } from '../../store.js'
+        projectCode.subscribe;
+        projectCode.set(project.id);
 </script>
 
 <style>
@@ -49,9 +51,9 @@
             <h1>{project.university} - {project.title}</h1>
             <button class="action styled" on:click={() => {
                     showModal.set(true)
-                    showLoginModal.set(true)
+                    showCommunicationModal.set(true)
                     }}>Take part now</button>
-            <p>{project.description}</p>
+            <p>{@html project.description}</p>
         </main>
 
         <aside>
